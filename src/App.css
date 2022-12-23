@@ -1,38 +1,74 @@
 .App {
   text-align: center;
+  position: relative;
+  min-height: 100vh
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+div.divider {
+  margin-top: 0.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+main {
+  position: absolute;
+  padding-top: 1rem;
+  bottom: 2rem;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  background-size: 80px;
+  overflow: scroll;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+#weather-box {
+  background-image: url('http://localhost:3000/weather/NH_Bulletin_Board.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 600px;
+  max-height: 70vh;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  display: flex;
+}
+
+#player {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+#weather h1 {
+  padding-left: 1rem;
+  font-size: 3rem;
+}
+
+#weather img {
+  height: 3rem;
+}
+
+header {
+  background-color: #ba8b34;
+  height: 3rem;
+}
+
+header h1 {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  margin: 0px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+footer {
+  color: #eeeeee;
+  height: 2rem;
+  position: absolute;
+  bottom: 0;
+  background-color: #ba8b34;
+  width: 100%;
+}
+
+footer a {
+  color: #ccccee;
+
 }
