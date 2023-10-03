@@ -46,10 +46,10 @@ function App() {
     navigator.geolocation.getCurrentPosition(
       ({coords}) => {setLocation([coords.latitude, coords.longitude])},
       () => {
-        fetch('http://ip-api.com/json/')
+        fetch('https://api.ipbase.com/v2/info')
           .then((res) => res.json())
-          .then((data) => {
-            setIpLocation([data.lat, data.lon]);
+          .then(({data: {location}}) => {
+            setIpLocation([location.latitude, location.longitude]);
           })
       }
     )
