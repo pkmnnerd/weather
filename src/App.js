@@ -23,7 +23,8 @@ const BACKGROUNDS = {
 }
 
 function App() {
-  const [location, setLocation] = useState([0, 0]);
+  const [ipLocation, setIpLocation] = useState(null);
+  const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
   const [hasWeather, setHasWeather] = useState(false);
   const [game, setGame] = useState('cityfolk');
@@ -41,21 +42,31 @@ function App() {
       setBackground('autumn');
     }
 
-    fetch('http://ip-api.com/json/')
-      .then((res) => res.json())
-      .then((data) => {
-        setLocation([data.lat, data.lon]);
-      })
+
+    navigator.geolocation.getCurrentPosition(
+      ({coords}) => {setLocation([coords.latitude, coords.longitude])},
+      () => {
+        fetch('http://ip-api.com/json/')
+          .then((res) => res.json())
+          .then((data) => {
+            setIpLocation([data.lat, data.lon]);
+          })
+      }
+    )
+
   }, [])
 
   useEffect(() => {
-    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${location[0]}&longitude=${location[1]}&hourly=temperature_2m,weathercode&current_weather=true`)
+    const coords = location || ipLocation;
+    console.log(coords);
+    if (coords)
+    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${coords[0]}&longitude=${coords[1]}&hourly=temperature_2m,weathercode&current_weather=true`)
       .then((res) => res.json())
       .then((data) => {
         setWeather(data);
         setHasWeather(true);
       })
-  }, [location])
+  }, [location, ipLocation])
 
 
   useEffect(() => {
@@ -103,6 +114,7 @@ function App() {
             <Weather weatherCode={weather.current_weather.weathercode} hour={hour}/>
           }
         </div>
+        {!location && <p>Enable location permissions for more accuracy</p>}
         <div id="player">
           { hasWeather && <Video hour={hour} weather={weatherMusic} game={game} />}
         </div>
